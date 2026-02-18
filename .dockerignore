@@ -1,0 +1,8 @@
+remind/output/
+remind/.Rproj.user/
+**/__pycache__/
+**/*.pyc
+.DS_Store
+*.Rproj
+.Rhistory
+.RData

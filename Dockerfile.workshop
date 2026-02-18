@@ -1,0 +1,42 @@
+FROM ubuntu:24.04
+
+# System dependencies
+RUN apt-get update && apt-get install -y \
+    git wget unzip vim nano less \
+    build-essential \
+    r-base r-base-dev \
+    libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev \
+    libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
+    libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
+    libgdal-dev libproj-dev libgeos-dev libudunits2-dev libglpk-dev libhdf5-dev libnetcdf-dev libx11-dev \
+    libcairo2-dev \
+    texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
+    pandoc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install GAMS
+COPY linux_x64_64_sfx.exe /tmp/gams_installer.exe
+RUN chmod +x /tmp/gams_installer.exe && \
+    /tmp/gams_installer.exe -d /opt/gams -a && \
+    rm /tmp/gams_installer.exe && \
+    ln -s /opt/gams/gams52.5_linux_x64_64_sfx /opt/gams/latest
+ENV PATH="/opt/gams/latest:$PATH"
+ENV GAMS_PATH="/opt/gams/latest"
+ENV GAMSLICE="/opt/gams/latest/gamslice.txt"
+
+# Clone REMIND (fresh, no Windows permission issues)
+WORKDIR /opt/remind
+RUN git clone https://github.com/remindmodel/remind.git . && \
+    git checkout workshop2025
+
+# Install R packages with build cache
+RUN --mount=type=cache,target=/root/renv-cache \
+    RENV_PATHS_CACHE=/root/renv-cache \
+    Rscript -e 'options(renv.config.pak.enabled = TRUE); "dummy"' && \
+    mkdir -p /root/.cache/R/renv/cache && \
+    cp -r /root/renv-cache/* /root/.cache/R/renv/cache/ 2>/dev/null || true
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
+CMD ["bash"]

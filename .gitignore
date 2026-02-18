@@ -1,0 +1,10 @@
+# Ignore the repos of the target software in the project directory
+remind/**
+# We always want to keep the input and output folders, but ignore the files in them
+input/**/*
+output/**/*
+log/**/*
+# Ignore log, license, exe files
+gamslice.txt
+*.log
+*.exe

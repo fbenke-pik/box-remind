@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
     pandoc \
+    cmake libuv1-dev gdal-bin pari-gp r-cran-base64enc \
+    gfortran \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GAMS

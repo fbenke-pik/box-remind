@@ -130,3 +130,8 @@ docker ps -a
 # Commit changes
 docker commit <container-id> remind-baked:fixed
 ```
+
+### Falk's Notes (integrate later)
+
+- 
+

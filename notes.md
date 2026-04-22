@@ -84,14 +84,11 @@ cd output/<example run>
 
 ### Build image based on specific `Dockerfile` & redirect log
 
-<!-- 
-```PowerShell
-```
--->
-
 ```PowerShell
 docker build -f Dockerfile.workshop -t remind-baked .
 ```
+- run this command in the folder with the `Dockerfile.workshop` file and the donwloaded gams installer `linux_x64_64_sfx.exe` 
+- if you want to use the current [cluster licence]((https://gitlab.pik-potsdam.de/rse/rsewiki/-/wikis/Installing-GAMS#license)), download gams 51.4.0 
 
 ### Check for images
 
@@ -131,7 +128,14 @@ docker ps -a
 docker commit <container-id> remind-baked:fixed
 ```
 
-### Falk's Notes (integrate later)
+### Running REMIND
+- make sure `make update-renv` works
+- make sure `Rscript scripts/utils/checkSetup.R` yields no warnings
+- make sure `Rscript start.R --gamscompile` throws no errors
 
-- 
+
+### Open questions
+- is it necessary to run `./gamsinst` as described [in these instructions](https://www.gams.com/50/docs/UG_UNIX_INSTALL.html)? (probably not)
+
+
 

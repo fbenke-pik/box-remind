@@ -1,5 +1,3 @@
-> Always remember that ** Containers are ephemeral **. Changes made while working inside it *do not persist* and are lost unless you use volumes or commit the container to an image. See below for how to [save changes after interactive fixes](save-changes), i.e work done on the container image during an interactive session.
-
 # Putting REMIND in a box
 
 Depending on target audience (i.e. REMIND devs, *workshop participants*), target compute environment (Desktop/laptop, AWS, HPC) and target ~~OS-level virtualization~~ container software (`docker`, `apptainer`) project structure may vary wildly. For the time being we'll focus on
@@ -100,7 +98,7 @@ docker images remind-baked
 
 ```PowerShell
 # general
-docker run --name {CONTAINER_NAME} -it -v ${PWD}/gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
+docker run --name <mycontainer> -it -v ${PWD}/gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
 
 # example
 docker run --name falk -it -v ./gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
@@ -122,9 +120,11 @@ docker run --rm -it \
 # list all running and stopped containers
 docker ps -a 
 
-# continue working in stopped container
-docker start {CONTAINER_NAME}
+# start a stopped container
+docker start <mycontainer>
 
+# continue working in container
+docker exec -it <mycontainer> bash
 ```
 
 

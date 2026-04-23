@@ -29,7 +29,7 @@ ENV GAMSLICE="/opt/gams/latest/gamslice.txt"
 # Clone REMIND (fresh, no Windows permission issues)
 WORKDIR /opt/remind
 RUN git clone https://github.com/remindmodel/remind.git . && \
-    git checkout develop
+    git checkout workshop2025
 
 # Install R packages with build cache
 RUN --mount=type=cache,target=/root/renv-cache \

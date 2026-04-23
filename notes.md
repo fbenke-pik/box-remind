@@ -96,10 +96,14 @@ docker build -f Dockerfile.workshop -t remind-baked .
 docker images remind-baked
 ```
 
-### Run the thing
+### Start a new container from the image
 
 ```PowerShell
-docker run --rm -it -v ${PWD}/gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
+# general
+docker run --name {CONTAINER_NAME} -it -v ${PWD}/gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
+
+# example
+docker run --name falk -it -v ./gamslice.txt:/opt/gams/latest/gamslice.txt remind-baked bash
 ```
 
 If one would prefer to mount the REMIND dir *outside of the container*, mount that as well
@@ -111,6 +115,18 @@ docker run --rm -it \
   -v ${PWD}/gamslice.txt:/opt/gams/latest/gamslice.txt \ # Provide license files?
   remind-baked bash
 ```
+
+### Pause and resume working on an image
+
+```PowerShell
+# list all running and stopped containers
+docker ps -a 
+
+# continue working in stopped container
+docker start {CONTAINER_NAME}
+
+```
+
 
 ### Copy stuff from container to host when no bridge
 
@@ -132,10 +148,19 @@ docker commit <container-id> remind-baked:fixed
 - make sure `make update-renv` works
 - make sure `Rscript scripts/utils/checkSetup.R` yields no warnings
 - make sure `Rscript start.R --gamscompile` throws no errors
+- run oneRegi together with transport `Rscript start.R -i`, then choose config `./config/tests/scenario_config_oneRegiPlus.csv` and run `testOneRegiTransport`
+- check run results by hand (as we have no `rs`): `modelstats::promptAndRun("./output/*")`
+
+### Making old workshop branch run
+- restore renv from ws lockfile will fail, some must be corrected manually 
+- in output folder, run `renv::install('GDPuc@1.5.3', 'mrcommons@1.65.1','mrfaocore@1.4.3','mrlandcore@1.6.3','nleqslv@3.3.5','lmomco@2.5.3','RcppArmadillo@15.0.2-2','lmom@3.2','mrdownscale@0.46.0','mrlandcore@1.6.3', 'gdx2@0.3.3')`
+- afterwards, `renv::restore()` should work
+
 
 
 ### Open questions
-- is it necessary to run `./gamsinst` as described [in these instructions](https://www.gams.com/50/docs/UG_UNIX_INSTALL.html)? (probably not)
+- is it necessary to run `./gamsinst` as described [in these instructions](https://www.gams.com/50/docs/UG_UNIX_INSTALL.html)? (probably not, as the solvers are also set directly in REMIND)
+
 
 
 

@@ -78,7 +78,7 @@ cd output/<example run>
 - [`box-remind`](https://gitlab.pik-potsdam.de/tonnru/box-remind.git)
 - [`REMIND` model branch `workshop2025`]()
 
-## Usefull docker commands
+## Useful docker commands
 
 ### Build image based on specific `Dockerfile` & redirect log
 
@@ -150,17 +150,28 @@ docker commit <container-id> remind-baked:fixed
 - make sure `Rscript start.R --gamscompile` throws no errors
 - run oneRegi together with transport `Rscript start.R -i`, then choose config `./config/tests/scenario_config_oneRegiPlus.csv` and run `testOneRegiTransport`
 - check run results by hand (as we have no `rs`): `modelstats::promptAndRun("./output/*")`
+- in case you need to copy input data files manually, make it available via `export REMIND_repos_dirs=/opt/remind_local_inputdata`
 
 ### Making old workshop branch run
 - restore renv from ws lockfile will fail, some must be corrected manually 
 - in output folder, run `renv::install('GDPuc@1.5.3', 'mrcommons@1.65.1','mrfaocore@1.4.3','mrlandcore@1.6.3','nleqslv@3.3.5','lmomco@2.5.3','RcppArmadillo@15.0.2-2','lmom@3.2','mrdownscale@0.46.0','mrlandcore@1.6.3', 'gdx2@0.3.3')`
 - afterwards, `renv::restore()` should work
+- running the workshop run `SSP2-NPi2025` should work
 
+### Run a simple coupled run (POC)
+- `git clone https://github.com/magpiemodel/magpie.git`
+- adjust magpie config in : `config/tests/scenario_config_oneRegiPlus.csv`: `testOneRegiMAgPIE;1;1;5;testOneRegi;;;reporting`
+- must be done via `Rscript start.R config/tests/scenario_config_magpie_oneRegiPlus.csv` (only activate the magpie run)
+- should work in principle
+- on my local machine this currently runs out of memory and my laptop freezes, interrupted the run
 
 
 ### Open questions
 - is it necessary to run `./gamsinst` as described [in these instructions](https://www.gams.com/50/docs/UG_UNIX_INSTALL.html)? (probably not, as the solvers are also set directly in REMIND)
 
+### Next steps
+- get a workshop 2026 branch with EDGE-T adjustments and workshop runs
+- POC deployment on AWS and running the workshop runs
 
 
 

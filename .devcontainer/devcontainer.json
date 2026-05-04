@@ -4,11 +4,7 @@
 	"name": "Ubuntu",
 
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	// "image": "codezeilen/magpie-codespace:v1",
-
-  "build": {
-		"dockerfile": "../Dockerfile.workshop"
-	},
+	"image": "fbenke/remind-poc:latest",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

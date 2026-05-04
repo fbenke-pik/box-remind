@@ -169,6 +169,18 @@ docker commit <container-id> remind-baked:fixed
 ### Open questions
 - is it necessary to run `./gamsinst` as described [in these instructions](https://www.gams.com/50/docs/UG_UNIX_INSTALL.html)? (probably not, as the solvers are also set directly in REMIND)
 
+### Codespaces Integration
+
+#### Step 1: Push your image to Docker Hub
+- https://docs.docker.com/get-started/introduction/build-and-push-first-image/
+- https://hub.docker.com/repositories/fbenke
+- `docker build -f Dockerfile.workshop -t fbenke/remind-poc .`
+- `docker login -u fbenke`
+- `docker push fbenke/remind-poc:latest`
+
+#### Step 2: Create a dev container, using docker hub
+- 
+
 ### Next steps
 - get a workshop 2026 branch with EDGE-T adjustments and workshop runs
 - POC deployment on AWS and running the workshop runs
